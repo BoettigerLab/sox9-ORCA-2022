@@ -1,4 +1,4 @@
 This repository contains original code and model parameters to reproduce the simulations described in our work investigating and modeling the 3D structure of the human SOX9 domain in embryonic stem cells and cranial neural crest cells.  
 
-
-To run, this code requires the polychrom repository, available at https://github.com/open2c/polychrom
+To run, this code requires the [polychrom repository](https://github.com/open2c/polychrom) developed by the open2c team.We added several additional functions to the repository to allow non-uniform loading of Cohesin.  These additions can be found in our fork of the project, [https://github.com/BoettigerLab/polychrom](https://github.com/BoettigerLab/polychrom).   
+ 
