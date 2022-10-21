@@ -1,12 +1,12 @@
 
 % simulate long vs short loops
 
-saveRoot = "T:\2022-02-24_LiangFu\StripeSim_ReelIn3\"; % Update this!
+saveRoot = "T:\2022-02-24_LiangFu\StripeSim_UniformShortLived\"; % Update file paths to a local folder
 nTrials = 200;
 offset = 0;
-batchSize = 2;
+batchSize = 4;
 hidden = true;
-GPU_ID = "0"; % "0" or "1"
+GPU_ID = "1"; % "0" or "1"
 
 cmdRuns = cell(0,2);
 
@@ -17,12 +17,12 @@ cmdRuns = cell(0,2);
 monomers = 1e3; % number of monomers in simulation % monmoer = 1 kb
 replicates = 1;  % number of replicated detached chromosomes
 trajectoryLength = 5000; % simulation length
-density = 0.001;  % monomer density of confining box
+density = 0.01;  % monomer density of confining box
 % ===== Loop Extrusion parameters =================
 % -------- Cohesin --------
 % long loops = 330,330.  short loops = 66,66;
-LEF_lifetime = 800;%  200;  %   average lifetime before spontanteous fall off. Mirny lab default is 200. could explore this.   
-LEF_separation = 500;%  100; % 1e9  ave distance between LEFs (loop extruding factors), measured in monomers. 
+LEF_lifetime = 40;%  200; 700 %   average lifetime before spontanteous fall off. Mirny lab default is 200. could explore this.   
+LEF_separation = 40;%  100; 500% 1e9  ave distance between LEFs (loop extruding factors), measured in monomers. 
 loadSites = []; % cohesin load sites, 0 indexed for python
 % --------- CTCF ----------
 
@@ -33,8 +33,7 @@ loadSites = []; % cohesin load sites, 0 indexed for python
 % 0 points both ways
 
 
-
-loadSites =  [205,795]; % for reel model
+loadSites =  [205,795]; % for both models
 ctcfSites   =  [200, 800]; % (0 indexed) Position of CTCF sites, recorded in units of monomers
 ctcfCapture =   [.999, .999]; % .9 was 'default' probability cohesin is captured rather than walking right past a CTCF site
 ctcfRelease =  [.003 .003]; % .003 was 'default', rate constant for cohesin release (smaller numbers hold cohesin for longer)
@@ -61,16 +60,17 @@ interactionMatrix = "[[0,0,0],[0,0,0],[0,0,0]]"; % interaction matrix in python 
 %  NOTE: Alterantively you may directly specify a loading probability dist.
 %  For example, a ChIP seq track 
 loadProb = zeros(1,monomers);
-loadProb(loadSites(1)) = .1; % one could instead chose a ChIP-seq track
-loadProb(loadSites(2)) = .9; % one could instead chose a ChIP-seq track
+% loadProb(loadSites(1)) = .03; % one could instead chose a ChIP-seq track
+% loadProb(loadSites(2)) = .97; % one could instead chose a ChIP-seq track
 loadProb = loadProb + .0001; 
 loadProb = loadProb./sum(loadProb);
 
 %======= End of parameter choices ====% 
 
 % location of the python code
-polychrom = 'C:\Shared\polychrom-shared\'; 
+polychrom = 'C:\Shared\polychrom-shared\'; %  'C:\Users\Alistair\Desktop\code\minrylab-polychrom\'; % 
 LEsim = [polychrom,'Simulations\StickyLoopExtSimRpt.py'];
+% C:\Users\Alistair\Desktop\code\minrylab-polychrom\Simulations\StickyLoopExtSim.py
 
 
 % ====== Run the simulation in python ============
@@ -84,6 +84,7 @@ LEsim = [polychrom,'Simulations\StickyLoopExtSimRpt.py'];
 % 
 clc
 % convert formats. Must be a comma separated string
+% ctcfSites="[80,280,420,550,700,850]"
 ctcfSites = num2str(ctcfSites,'% d'); % convert to string (not char array)
 ctcfSites = string(['[',regexprep(ctcfSites,' ',','),']']);
 for i=1:6
