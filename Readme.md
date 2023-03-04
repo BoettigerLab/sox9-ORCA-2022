@@ -1,3 +1,7 @@
+# Structural elements facilitate extreme long-range gene regulation at a human disease locus
+
+[![DOI](https://zenodo.org/badge/299465350.svg)](https://zenodo.org/badge/latestdoi/299465350)
+
 This repository contains original code and model parameters to used in the analyses and simulations described in our work investigating and modeling the 3D structure of the human SOX9 domain in embryonic stem cells and cranial neural crest cells:
 
  "Structural elements facilitate extreme long-range gene regulation at a human disease locus".
