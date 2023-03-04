@@ -1,11 +1,6 @@
-% location of ORCA data (update to your local filepaths)
+%% ORCA data prep
 NAS02_Vol3 = 'Z:\';
 dataFolder = [NAS02_Vol3,'\Liang-Fu\2021-03-09_h9a7_WT_Sox9_p2\DNA_Expt\Analysis\'];
-
-% location of simulation data (update to your file paths. Code to reproduce these simulations is included, see Readme).
-simFolders ={'T:/2022-02-24_LiangFu/StripeSim_UniformShortLived\',...
-    'T:/2022-02-24_LiangFu/StripeSim_ReelIn3\'};
-
 ESCFov = [7:21, 38:48];
 CNCCFov = [1:5,50:55];
 [polysSox9,mapsSox9] = CombineAllFits(dataFolder,'byFOV',true);
@@ -26,14 +21,15 @@ polyStep = 10; % 2
 mapStep = 1;
 timeStep = 1;
 % v2
+expFolders ={'T:/2022-02-24_LiangFu/StripeSim_UniformShortLived\',...
+    'T:/2022-02-24_LiangFu/StripeSim_ReelIn3\'};
 
-
-    repFolders = FindFiles([simFolders{1},'rep*'],'onlyFolders',true,'fullPath',false);
+    repFolders = FindFiles([expFolders{1},'rep*'],'onlyFolders',true,'fullPath',false);
     nRuns = length(repFolders);
     distMap = cell(nRuns,1);
     polyDat = cell(nRuns,1);
      for r=1:nRuns  % this is now a loop over reps. 
-        folder = [simFolders{e},repFolders{r}];  % filesep,
+        folder = [expFolders{e},repFolders{r}];  % filesep,
         % disp([folder,'  now loading data']);
             if r==1
                 disp([folder,'  now loading data for n=',num2str(nRuns)]);
@@ -56,12 +52,12 @@ catch
 
  
 for e=1:2
-    repFolders = FindFiles([simFolders{e},'rep*'],'onlyFolders',true,'fullPath',false);
+    repFolders = FindFiles([expFolders{e},'rep*'],'onlyFolders',true,'fullPath',false);
     nRuns = length(repFolders);
     distMap = cell(nRuns,1);
     polyDat = cell(nRuns,1);
      for r=1:nRuns  % this is now a loop over reps. 
-        folder = [simFolders{e},repFolders{r}];  % filesep,
+        folder = [expFolders{e},repFolders{r}];  % filesep,
         % disp([folder,'  now loading data']);
             if r==1
                 disp([folder,'  now loading data for n=',num2str(nRuns)]);
@@ -145,7 +141,7 @@ subplot(1,3,3); imagesc(multiSort'); title('Multi-loop');  ylim([0,2700]);
 GetColorMap ('whiteToRed');
 set(gcf,'color','w','position',[10,10,900,800]);
 
-%% Figure 5D and S5D
+%% Figure 5D and S6D
 % ORCA 15-42 and 35-42
 CNCCno42 = isnan(squeeze(CNCCpolys(42,1,:)));
 sum(CNCCno42)
@@ -324,7 +320,7 @@ subplot(3,1,3);
 plot(mulmap2); axis([15 90 18 28]);hold on;
 title('mulloop');
 
-%% Figure S5C
+%% Figure S6C
 dM = cncMaps(1:52,1:52,:);
 strA = squeeze(dM(42,:,:));
 strC = strA < 150; %100,150,200,250

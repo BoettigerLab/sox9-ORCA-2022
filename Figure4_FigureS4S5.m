@@ -317,6 +317,47 @@ legend('A7','E1','B10');
 %ylabel ('Median distance from center/Rg');
 title('Mean distance to other points');
 
+%% Figure S5A-D
+
+figure(112);clf;
+imagesc(A7_Contact_interp); caxis ([.05,.4]); axis([1 80 1 80]);;
+title(['A7 Contact (WT) Interp, n=' num2str(size(goodA7maps (:,:,A7highDetect),3))])
+colorbar
+GetColorMap ('whiteToRed')
+set(gcf, 'position',[10,10,900,800]);
+exportgraphics(gcf,'A7_Interp_All80.pdf')
+
+figure(115);clf;
+imagesc(E1_Contact_interp); caxis ([.05,.4]); axis([1 80 1 80]);;
+title(['E1 Contact (SSE1.35 delta CTCF) Interp, n=' num2str(size(goodE1maps (:,:,E1highDetect),3))])
+colorbar
+GetColorMap ('whiteToRed')
+set(gcf, 'position',[10,10,900,800]);
+exportgraphics(gcf,'E1_Interp_All80.pdf')
+
+figure(42); clf;
+imagesc(E1_Contact_interp - A7_Contact_interp); caxis([-.1,.1]); axis([1 80 1 80]);
+title(['E1 - A7 Contact Subtraction Interp']);
+colorbar
+GetColorMap ('BlueWhiteRed')
+set(gcf, 'position',[10,10,900,800]);
+exportgraphics(gcf,'E1_A7_Contact_Subtraction_Interp_All80.pdf')
+
+figure(114);clf;
+imagesc(B10_Contact_interp); caxis ([.05,.4]); axis([1 80 1 80]);
+title(['B10 Contact (SSEProm delta CTCF) Interp, n=' num2str(size(goodB10maps (:,:,B10highDetect),3))])
+colorbar
+GetColorMap ('whiteToRed')
+set(gcf, 'position',[10,10,900,800]);
+exportgraphics(gcf,'B10_Interp_All80.pdf')
+
+figure(15); clf;
+imagesc(B10_Contact_interp - A7_Contact_interp); caxis([-.1,.1]); axis([1 80 1 80]);
+title(['B10 - A7 Contact Subtraction Interp']);
+colorbar
+GetColorMap ('BlueWhiteRed')
+set(gcf, 'position',[10,10,900,800]);
+exportgraphics(gcf,'B10_A7_Contact_Subtraction_Interp_All80.pdf')
 
 
 
